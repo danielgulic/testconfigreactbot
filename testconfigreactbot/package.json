@@ -1,0 +1,15 @@
+{
+  "dependencies": {
+    "btoa": "^1.2.1",
+    "cors": "^2.8.4",
+    "discord.js": "discordjs/discord.js",
+    "express": "^4.16.3",
+    "express-jwt": "^5.3.1",
+    "jsonwebtoken": "^8.3.0",
+    "morgan": "^1.9.0",
+    "node-fetch": "^2.2.0",
+    "rethinkdbdash": "^2.3.31",
+    "semistandard": "^12.0.1",
+    "yamljs": "^0.3.0"
+  }
+}
