@@ -20,7 +20,7 @@ module.exports = async () => {
     res.json(await client.guilds.filter(g => g.owner.user.id === req.user).map(g => JSON.parse(JSON.stringify({
       name: g.name,
       id: g.id,
-      ownerId: g.owner.user.id,
+      ownerId: g.owner.user.id
     }))));
   });
 
@@ -42,7 +42,7 @@ module.exports = async () => {
       region: clientGuild.region,
       createdAt: clientGuild.createdTimestamp,
       memberCount: clientGuild.memberCount
-    }
+    };
     res.json({ ok: true, guild: responseGuild });
   });
 

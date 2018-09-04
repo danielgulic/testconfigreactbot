@@ -22,9 +22,10 @@ client.on('message', async msg => {
       msg.channel.send('pong');
       break;
     case 'tag':
-      if (!guild.config.plugins || !guild.config.plugins.tags || guild.config.plugins.tags == {}) return;
+      if (!guild.config.plugins || !guild.config.plugins.tags || guild.config.plugins.tags === {}) return;
       if (!args[0]) return msg.channel.send('Available tags: ' + guild.config.plugins.tags.map(t => t.name).join(', '));
-      msg.channel.send(guild.config.plugins.tags.filter(t => t.name == args[0].toLowerCase())[0].message);
+      msg.channel.send(guild.config.plugins.tags.filter(t => t.name === args[0].toLowerCase())[0].message);
+      break;
     case 'viewconfig':
       msg.channel.send(guild.config);
       break;
@@ -48,4 +49,4 @@ const getGuildInfo = async (gid) => {
   const guild = await r.table('guilds').get(gid).run();
   guild.config = JSON.parse(guild.config);
   return guild;
-}
+};
