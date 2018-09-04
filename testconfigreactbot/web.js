@@ -28,7 +28,7 @@ module.exports = async () => {
     if (!req.user) return res.sendStatus(401);
     const clientGuild = await client.guilds.get(req.params.gid);
     const dbGuild = await r.table('guilds').get(req.params.gid).run();
-    if (!clientGuild || !dbGuild) return res.status(404).json({ error: 'Cannot find guild' });
+    if (!clientGuild || !dbGuild) return res.status(404).json({ ok: false, error: 'Cannot find guild' });
     if (req.user !== clientGuild.owner.user.id) return res.sendStatus(403);
 
     const responseGuild = {
@@ -43,8 +43,19 @@ module.exports = async () => {
       createdAt: clientGuild.createdTimestamp,
       memberCount: clientGuild.memberCount
     }
+    res.json({ ok: true, guild: responseGuild });
+  });
 
-    res.json(responseGuild);
+  app.patch('/api/guilds/:gid', async (req, res) => {
+    if (!req.user) return res.sendStatus(401);
+    const clientGuild = await client.guilds.get(req.params.gid);
+    const dbGuild = await r.table('guilds').get(req.params.gid).run();
+    if (!clientGuild || !dbGuild) return res.status(404).json({ error: 'Cannot find guild' });
+    if (req.user !== clientGuild.owner.user.id) return res.sendStatus(403);
+    console.log(req.body);
+    if (!req.body.config) return res.status(400).json({ ok: false, error: '"config" is required in body' });
+    await r.table('guilds').get(req.params.gid).update({ config: req.body.config });
+    res.sendStatus(200);
   });
 
   app.listen(3000, () => console.log('API listening on port ' + 3000));

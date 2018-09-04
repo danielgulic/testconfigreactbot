@@ -28,15 +28,16 @@ class GuildOverview extends Component {
       }
     });
     const json = await res.json();
-    console.log(json);
-    this.setState({ guild: json }); 
+    const guild = json.guild;
+    console.log(guild);
+    this.setState({ guild }); 
   }
 
   render() {
     return (
       <div>
       { this.state.guild == null
-        ? <h1>hi</h1>
+        ? <h1>Loading...</h1>
         : <div>
             <div className="card text-center">
               <div className="card-header">
@@ -76,6 +77,10 @@ class GuildOverview extends Component {
                     <tr>
                       <th scope="row">Icon</th>
                       <td><img src={this.state.guild.iconUrl} alt="Guild icon" className="rounded-circle" /></td>
+                    </tr>
+                    <tr>
+                      <th scope="row">Splash</th>
+                      <td>{ this.state.guild.splashUrl ? <img src={this.state.guild.splashUrl} alt="Splash" /> : <em>No Splash</em> }</td>
                     </tr>
                   </tbody>
                 </table>
